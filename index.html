@@ -1,762 +1,269 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QuASI - Quantum & Autonomous Sensing Innovations</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --primary-color: #1e40af;
-            --primary-light: #3b82f6;
-            --secondary-color: #0f172a;
-            --accent-color: #06b6d4;
-            --light-bg: #f8fafc;
-            --white: #ffffff;
-            --gray-50: #f9fafb;
-            --gray-100: #f3f4f6;
-            --gray-600: #4b5563;
-            --gray-700: #374151;
-            --gray-900: #111827;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            line-height: 1.6;
-            color: var(--gray-700);
-            font-weight: 400;
-        }
-
-        /* Navigation */
-        .navbar {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-            padding: 1rem 0;
-            transition: all 0.3s ease;
-        }
-
-        .navbar-brand {
-            font-weight: 700;
-            font-size: 1.75rem;
-            color: var(--primary-color) !important;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .navbar-nav .nav-link {
-            color: var(--gray-700) !important;
-            font-weight: 500;
-            padding: 0.5rem 1rem !important;
-            margin: 0 0.25rem;
-            border-radius: 0.5rem;
-            transition: all 0.3s ease;
-        }
-
-        .navbar-nav .nav-link:hover,
-        .navbar-nav .nav-link.active {
-            color: var(--primary-color) !important;
-            background-color: var(--gray-50);
-        }
-
-        /* Hero Section */
-        .hero-section {
-            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
-            color: white;
-            padding: 120px 0 80px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Ccircle cx='5' cy='5' r='5'/%3E%3Ccircle cx='55' cy='55' r='5'/%3E%3Ccircle cx='55' cy='5' r='5'/%3E%3Ccircle cx='5' cy='55' r='5'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
-            opacity: 0.3;
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 2;
-        }
-
-        .hero-section h1 {
-            font-size: 3.5rem;
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-            line-height: 1.2;
-        }
-
-        .hero-section .lead {
-            font-size: 1.25rem;
-            font-weight: 400;
-            margin-bottom: 2rem;
-            opacity: 0.9;
-        }
-
-        /* Content Sections */
-        .content-section {
-            padding: 80px 0;
-            display: none;
-        }
-
-        .content-section.active {
-            display: block;
-        }
-
-        .intro-section {
-            background: var(--white);
-        }
-
-        .services-section {
-            background: var(--gray-50);
-        }
-
-        .contact-section {
-            background: var(--white);
-        }
-
-        .section-title {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--gray-900);
-            margin-bottom: 1rem;
-            position: relative;
-        }
-
-        .section-subtitle {
-            font-size: 1.125rem;
-            color: var(--gray-600);
-            margin-bottom: 3rem;
-        }
-
-        /* Cards */
-        .card {
-            border: none;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            border-radius: 1rem;
-            overflow: hidden;
-            transition: all 0.3s ease;
-            background: var(--white);
-        }
-
-        .card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-        }
-
-        .service-card {
-            height: 100%;
-            padding: 2rem;
-        }
-
-        .service-icon {
-            width: 4rem;
-            height: 4rem;
-            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
-            border-radius: 1rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 1.5rem;
-            color: white;
-            font-size: 1.5rem;
-        }
-
-        .service-card h4 {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: var(--gray-900);
-            margin-bottom: 1rem;
-        }
-
-        .service-card p {
-            color: var(--gray-600);
-            margin-bottom: 1.5rem;
-        }
-
-        .service-features {
-            list-style: none;
-        }
-
-        .service-features li {
-            padding: 0.25rem 0;
-            color: var(--gray-600);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .service-features .check-icon {
-            color: #10b981;
-            font-size: 0.875rem;
-        }
-
-        /* Profile Card */
-        .profile-card {
-            text-align: center;
-            padding: 2.5rem;
-            background: var(--white);
-        }
-
-        .profile-avatar {
-            width: 120px;
-            height: 120px;
-            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 1.5rem;
-            font-size: 3rem;
-            color: white;
-        }
-
-        .profile-card h5 {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: var(--gray-900);
-            margin-bottom: 0.5rem;
-        }
-
-        .profile-card .title {
-            color: var(--primary-color);
-            font-weight: 500;
-            margin-bottom: 1rem;
-        }
-
-        .credentials {
-            background: var(--gray-50);
-            padding: 1.5rem;
-            border-radius: 0.75rem;
-            margin-top: 1.5rem;
-        }
-
-        .credentials strong {
-            color: var(--gray-900);
-            display: block;
-            margin-bottom: 0.5rem;
-        }
-
-        .credentials p {
-            font-size: 0.875rem;
-            color: var(--gray-600);
-            margin: 0;
-        }
-
-        /* Contact */
-        .contact-info {
-            background: var(--white);
-            padding: 2.5rem;
-            border-radius: 1rem;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-        }
-
-        .contact-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .contact-item i {
-            color: var(--primary-color);
-            font-size: 1.25rem;
-            margin-top: 0.125rem;
-            width: 20px;
-        }
-
-        .contact-item-content strong {
-            color: var(--gray-900);
-            font-weight: 600;
-        }
-
-        .contact-item-content p {
-            margin: 0;
-            color: var(--gray-600);
-        }
-
-        /* Buttons */
-        .btn-primary {
-            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
-            border: none;
-            padding: 0.75rem 2rem;
-            border-radius: 0.5rem;
-            font-weight: 500;
-            text-transform: none;
-            transition: all 0.3s ease;
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3);
-            background: linear-gradient(135deg, var(--primary-light), var(--primary-color));
-        }
-
-        /* Map placeholder */
-        .map-placeholder {
-            height: 400px;
-            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
-            border-radius: 1rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            text-align: center;
-        }
-
-        .map-content i {
-            font-size: 4rem;
-            margin-bottom: 1rem;
-            opacity: 0.8;
-        }
-
-        /* Footer */
-        footer {
-            background: var(--gray-900);
-            color: white;
-            padding: 3rem 0;
-        }
-
-        footer h5 {
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .hero-section {
-                padding: 80px 0 60px;
-            }
-            
-            .hero-section h1 {
-                font-size: 2.5rem;
-            }
-            
-            .content-section {
-                padding: 60px 0;
-            }
-            
-            .section-title {
-                font-size: 2rem;
-            }
-        }
-
-        /* Animations */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .fade-in-up {
-            animation: fadeInUp 0.6s ease-out;
-        }
-
-        /* Utility classes */
-        .text-gradient {
-            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-    </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>QuASI Inc. | Magnetic sensing consultancy</title>
+<meta name="description" content="Independent engineering consultancy for airborne, uncrewed and quantum magnetometry: interference testing, aeromagnetic compensation, magnetic anomaly detection and magnetic navigation.">
+<meta property="og:title" content="QuASI Inc. | Quantum & Autonomous Sensing Innovations">
+<meta property="og:description" content="Magnetometry that holds up in the field. Compensation, anomaly detection, magnetic navigation and quantum sensor evaluation.">
+<meta property="og:image" content="assets/renfrew-map.jpg">
+<link rel="icon" href="assets/logo/quasi-icon-B6.svg" type="image/svg+xml">
+<link rel="icon" href="assets/logo/quasi-icon-B6.png" type="image/png">
+<link rel="apple-touch-icon" href="assets/logo/quasi-icon-B6.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/site.css">
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg fixed-top">
-        <div class="container">
-            <a class="navbar-brand" href="#" onclick="showSection('intro')">
-                <i class="fas fa-atom"></i>
-                <span>QuASI</span>
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="#" onclick="showSection('intro')">About</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#" onclick="showSection('services')">Services</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#" onclick="showSection('contact')">Contact</a>
-                    </li>
-                </ul>
-            </div>
+
+<nav class="nav" id="nav">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="QuASI home">
+      <img src="assets/logo/quasi-logo-B2.svg" alt="QuASI" width="160" height="46"><span>Quantum &amp; Autonomous Sensing Innovations</span>
+    </a>
+    <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="navLinks">Menu</button>
+    <ul id="navLinks">
+      <li><a href="#services">Services</a></li>
+      <li><a href="#tools">Tools</a></li>
+      <li><a href="#notebooks">Notebooks</a></li>
+      <li><a href="#publications">Publications</a></li>
+      <li><a href="#about">About</a></li>
+    </ul>
+    <a class="btn primary" href="#contact">Discuss a project</a>
+  </div>
+</nav>
+
+<main id="top">
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <h1>Magnetometry that holds up in the field.</h1>
+        <p class="lede">QuASI is an independent engineering consultancy for airborne, uncrewed and quantum magnetic sensing. We take systems from sensor selection and interference testing through compensation, anomaly detection and magnetic navigation.</p>
+        <div class="ctas">
+          <a class="btn primary" href="#contact">Discuss a project</a>
+          <a class="btn ghost" href="tools/noise.html">Open the noise calculator</a>
         </div>
-    </nav>
+      </div>
+      <figure class="map-panel" style="margin:0">
+        <img src="assets/renfrew-map.jpg" alt="Shaded aeromagnetic anomaly map near Renfrew, Ontario, with a survey flight line drawn across it" width="1400" height="1158">
+        <svg id="mapSvg" viewBox="0 0 1000 827" preserveAspectRatio="none" aria-hidden="true"></svg>
+      </figure>
+    </div>
+    <figure class="trace" style="margin:40px 0 0">
+      <svg id="traceSvg" viewBox="0 0 1000 170" preserveAspectRatio="none" role="img" aria-label="Measured magnetic field along a 115 km flight line compared with the anomaly map"></svg>
+      <figcaption>
+        <span><span class="key"><i style="background:#9fb3c8"></i>Map prediction</span><span class="key"><i style="background:#1d5fa8"></i>Measured, compensated</span></span>
+        <span id="traceReadout">Flight line 1002.16 over Renfrew, Ontario: 115 km, public DAF-MIT data. Hover to follow the aircraft.</span>
+      </figcaption>
+    </figure>
+  </div>
+</section>
 
-    <!-- Hero Section -->
-    <section class="hero-section">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-lg-10 text-center">
-                    <div class="hero-content fade-in-up">
-                        <h1>Quantum & Autonomous<br><span class="text-gradient">Sensing Innovations</span></h1>
-                        <p class="lead">Advanced geophysical consulting and quantum sensing solutions for defense and commercial applications</p>
-                        <button class="btn btn-primary btn-lg" onclick="showSection('services')">
-                            Explore Our Expertise <i class="fas fa-arrow-right ms-2"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+<section id="services">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>What we do</h2>
+      <p>Specialist support for teams building, flying or buying magnetic sensing systems. Engagements range from a two-day design review to multi-year technical support on a programme.</p>
+    </div>
+    <div class="services">
+      <div class="svc">
+        <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="20" cy="20" r="4"/><path d="M20 16c-9-10-17-2-12 6M20 24c9 10 17 2 12-6M20 16c9-10 17-2 12 6M20 24c-9 10-17 2-12-6"/></svg>
+        <div><h3>Interference testing and sensor placement</h3>
+        <p>Find out what your platform does to the field before it flies, and put the sensor where it will work.</p>
+        <ul><li>Ground and in-flight interference mapping</li><li>Mount-point and boom-length selection</li><li>Payload magnetic hygiene reviews</li></ul></div>
+      </div>
+      <div class="svc">
+        <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 20c3-9 5 9 8 0s5 9 8 0 5 9 8 0 5 9 8 0"/><path d="M3 32h34" opacity=".5"/></svg>
+        <div><h3>Aeromagnetic compensation</h3>
+        <p>Remove the aircraft from the data with methods you can audit, from Tolles–Lawson to machine learning.</p>
+        <ul><li>Calibration manoeuvre design and analysis</li><li>Telemetry-augmented and neural compensation</li><li>Independent performance verification</li></ul></div>
+      </div>
+      <div class="svc">
+        <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="20" cy="20" r="14"/><circle cx="20" cy="20" r="7"/><path d="M20 2v8M20 30v8M2 20h8M30 20h8"/></svg>
+        <div><h3>Magnetic anomaly detection</h3>
+        <p>Predict what you can detect, at what range, then design the detector and the trial to prove it.</p>
+        <ul><li>Detection-range and noise-budget modelling</li><li>Matched-filter and Anderson-function detectors</li><li>Trial planning and post-trial analysis</li></ul></div>
+      </div>
+      <div class="svc">
+        <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="20" cy="20" r="16"/><path d="M20 8l5 12-5 12-5-12z"/></svg>
+        <div><h3>Magnetic navigation</h3>
+        <p>GPS-independent positioning by map matching. Know if it will work on your route before you build it.</p>
+        <ul><li>Map quality and information-content assessment</li><li>Feasibility and accuracy studies</li><li>Filter prototyping in Python</li></ul></div>
+      </div>
+      <div class="svc">
+        <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><ellipse cx="20" cy="20" rx="16" ry="6"/><ellipse cx="20" cy="20" rx="6" ry="16"/><circle cx="20" cy="20" r="2.5" fill="currentColor"/></svg>
+        <div><h3>Quantum and optically pumped sensors</h3>
+        <p>Test and integrate optically pumped, vapour-cell, NV-diamond and full-tensor gradiometer systems.</p>
+        <ul><li>Noise, heading-error and dead-zone characterisation</li><li>Gradiometer and tensor configuration design</li><li>Integration on uncrewed platforms</li></ul></div>
+      </div>
+      <div class="svc">
+        <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 4h16l6 6v26H9z"/><path d="M25 4v6h6M14 18h12M14 24h12M14 30h7"/></svg>
+        <div><h3>Technical advisory</h3>
+        <p>An experienced, independent voice for proposals, reviews and requirements.</p>
+        <ul><li>Technical volumes and proposal support</li><li>Design and test-readiness reviews</li><li>Requirements definition and training</li></ul></div>
+      </div>
+    </div>
 
-    <!-- About Section -->
-    <section id="intro" class="content-section intro-section active">
-        <div class="container">
-            <div class="row align-items-center g-5">
-                <div class="col-lg-7">
-                    <h2 class="section-title">About QuASI</h2>
-                    <p class="section-subtitle">Leading the future of quantum sensing and autonomous systems</p>
-                    
-                    <div class="mb-4">
-                        <p>Quantum & Autonomous Sensing Innovations (QuASI) Inc. is a cutting-edge consulting firm specializing in advanced geophysical research and quantum sensing technologies. Founded by Dr. Loughlin Tuck, P.Eng, our company bridges the gap between theoretical quantum physics and practical engineering applications.</p>
-                        
-                        <p>With extensive experience in defense research, airborne geophysical surveys, and quantum sensor development, we provide specialized consulting services for magnetic anomaly detection, navigation systems, and unmanned aerial vehicle integration.</p>
-                        
-                        <p>Our expertise spans multiple disciplines including engineering physics, geology, and geophysics. Based in Russell, Ontario, QuASI serves clients across North America, delivering innovative solutions that push the boundaries of sensing technology and autonomous systems.</p>
-                    </div>
+    <ol class="steps" aria-label="How an engagement runs">
+      <li><h3>Scope</h3><p>Agree the question, the success criteria and what data already exists.</p></li>
+      <li><h3>Model</h3><p>Simulate the signal, noise and platform before anything is built or flown.</p></li>
+      <li><h3>Measure</h3><p>Ground tests and flight trials, designed to answer the question cleanly.</p></li>
+      <li><h3>Deliver</h3><p>A report, working code and a clear recommendation you can act on.</p></li>
+    </ol>
+  </div>
+</section>
 
-                    <div class="row g-4 mt-4">
-                        <div class="col-sm-6">
-                            <div class="d-flex align-items-center gap-3">
-                                <div class="service-icon" style="width: 3rem; height: 3rem; font-size: 1.25rem;">
-                                    <i class="fas fa-cogs"></i>
-                                </div>
-                                <div>
-                                    <h6 class="mb-1 fw-bold">Quantum Systems</h6>
-                                    <small class="text-muted">Advanced sensor integration</small>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="d-flex align-items-center gap-3">
-                                <div class="service-icon" style="width: 3rem; height: 3rem; font-size: 1.25rem;">
-                                    <i class="fas fa-satellite"></i>
-                                </div>
-                                <div>
-                                    <h6 class="mb-1 fw-bold">Geophysical Surveys</h6>
-                                    <small class="text-muted">Precision measurements</small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-5">
-                    <div class="card profile-card">
-                        <div class="profile-avatar">
-                            <i class="fas fa-user-tie"></i>
-                        </div>
-                        <h5>Dr. Loughlin Tuck, P.Eng</h5>
-                        <p class="title">Principal Consultant & Founder</p>
-                        <div class="credentials">
-                            <strong>Professional Engineer - Ontario</strong>
-                            <p>PhD Earth Science - Geophysics<br>
-                            MASc Material Physics Engineering<br>
-                            MSc Exploration Geology<br>
-                            BASc Engineering Physics</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+<section id="tools">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>Free engineering tools</h2>
+      <p>Browser-based calculators built from first-principles physics. Nothing is uploaded, and every assumption is shown on the page.</p>
+    </div>
+    <div class="tools">
+      <a class="tool" href="tools/noise.html">
+        <div class="pv"><svg viewBox="0 0 400 150" aria-hidden="true">
+          <path d="M20 20 C 90 60, 120 95, 200 105 S 330 112, 390 112" fill="none" stroke="#9fb3c8" stroke-width="2.5"/>
+          <path d="M20 135 L 390 25" fill="none" stroke="#1d5fa8" stroke-width="2.5"/>
+          <path d="M20 88 H390" stroke="#1e9e8f" stroke-width="2" stroke-dasharray="6 5"/>
+          <circle cx="178" cy="88" r="5" fill="#1e9e8f"/></svg></div>
+        <div class="tx"><h3>Noise budget and detection range</h3>
+          <p>Combine sensor noise, bandwidth, platform interference and environmental noise into one budget, then see how far away you can detect a given dipole.</p>
+          <span class="go">Open calculator</span></div>
+      </a>
+      <a class="tool" href="tools/mad-sim.html">
+        <div class="pv"><svg viewBox="0 0 400 150" aria-hidden="true">
+          <path id="pvSig" fill="none" stroke="#1d5fa8" stroke-width="2.5" d=""/>
+          <path d="M20 120 H390" stroke="#dce3ea"/></svg></div>
+        <div class="tx"><h3>MAD simulator</h3>
+          <p>Fly a magnetometer past a magnetic dipole at any latitude, heading and range. Add realistic noise and watch an Anderson-function detector decide.</p>
+          <span class="go">Open simulator</span></div>
+      </a>
+    </div>
+  </div>
+</section>
 
-    <!-- Services Section -->
-    <section id="services" class="content-section services-section">
-        <div class="container">
-            <div class="text-center mb-5">
-                <h2 class="section-title">Our Expertise</h2>
-                <p class="section-subtitle">Specialized consulting in quantum sensing and autonomous systems</p>
-            </div>
-            
-            <div class="row g-4">
-                <div class="col-lg-6">
-                    <div class="card service-card">
-                        <div class="service-icon">
-                            <i class="fas fa-atom"></i>
-                        </div>
-                        <h4>Magnetic & Electromagnetic Systems</h4>
-                        <p>Design and optimization of quantum sensing systems, integration with conventional engineering systems, and performance analysis using advanced methodologies.</p>
-                        <ul class="service-features">
-                            <li><i class="fas fa-check check-icon"></i>Quantum sensor development & integration</li>
-                            <li><i class="fas fa-check check-icon"></i>System optimization & performance analysis</li>
-                            <li><i class="fas fa-check check-icon"></i>Advanced electromagnetic modeling</li>
-                        </ul>
-                    </div>
-                </div>
-                
-                <div class="col-lg-6">
-                    <div class="card service-card">
-                        <div class="service-icon">
-                            <i class="fas fa-compass"></i>
-                        </div>
-                        <h4>Magnetic Navigation Systems</h4>
-                        <p>Advanced navigation algorithms and systems using magnetic field data, signal processing, and control engineering principles for precision navigation applications.</p>
-                        <ul class="service-features">
-                            <li><i class="fas fa-check check-icon"></i>Navigation algorithm development</li>
-                            <li><i class="fas fa-check check-icon"></i>Magnetic field analysis & modeling</li>
-                            <li><i class="fas fa-check check-icon"></i>Signal processing optimization</li>
-                        </ul>
-                    </div>
-                </div>
-                
-                <div class="col-lg-6">
-                    <div class="card service-card">
-                        <div class="service-icon">
-                            <i class="fas fa-drone"></i>
-                        </div>
-                        <h4>Unmanned Aerial Systems</h4>
-                        <p>Systems engineering approach to UAV sensor integration, aerospace engineering principles for platform optimization, and comprehensive sensor performance analysis.</p>
-                        <ul class="service-features">
-                            <li><i class="fas fa-check check-icon"></i>UAV sensor integration & optimization</li>
-                            <li><i class="fas fa-check check-icon"></i>Platform design & performance analysis</li>
-                            <li><i class="fas fa-check check-icon"></i>Electromagnetic interference mitigation</li>
-                        </ul>
-                    </div>
-                </div>
-                
-                <div class="col-lg-6">
-                    <div class="card service-card">
-                        <div class="service-icon">
-                            <i class="fas fa-wave-square"></i>
-                        </div>
-                        <h4>Signal Processing & Algorithms</h4>
-                        <p>Advanced data fusion and algorithm development using engineering mathematics, statistical analysis, and system performance optimization techniques.</p>
-                        <ul class="service-features">
-                            <li><i class="fas fa-check check-icon"></i>Data fusion & algorithm development</li>
-                            <li><i class="fas fa-check check-icon"></i>Statistical analysis & modeling</li>
-                            <li><i class="fas fa-check check-icon"></i>Performance optimization & validation</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+<section id="notebooks">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>Open notebooks</h2>
+      <p>Reproducible Python notebooks that answer one practical question each, using public flight data. Read them on the site or download them and run them yourself.</p>
+    </div>
+    <div class="nbs">
+      <article class="nb">
+        <div><div class="q">Is Tolles–Lawson enough for an in-cabin magnetometer?</div>
+          <div class="meta">Compensation · DAF-MIT open flight data, flight 1002</div></div>
+        <p class="find">Classic Tolles–Lawson removes 85–95 % of in-cabin interference, even from a calibration box flown 3 km above the survey. Aircraft telemetry halves what is left, but only if you low-pass it first.</p>
+        <div class="links"><a href="notebooks/01_in_cabin_compensation.html">Read notebook</a><a href="notebooks/01_in_cabin_compensation.ipynb" download>Download .ipynb</a></div>
+      </article>
+      <article class="nb">
+        <div><div class="q">How good does compensation need to be for magnetic navigation?</div>
+          <div class="meta">MagNav · particle filter over 115 km of real data</div></div>
+        <p class="find">A compensated in-cabin sensor navigates as well as a tail stinger (20–35 m against 1 km of INS drift). The filter tolerates 200 nT of white noise, but uncompensated interference of similar size breaks it.</p>
+        <div class="links"><a href="notebooks/02_magnav_noise_tolerance.html">Read notebook</a><a href="notebooks/02_magnav_noise_tolerance.ipynb" download>Download .ipynb</a></div>
+      </article>
+    </div>
+    <p class="soon">Shared code: <a href="code/quasimag.py">quasimag.py</a>, a small MIT-licensed Python module for Tolles–Lawson compensation, spectra and map-matching navigation.</p>
+  </div>
+</section>
 
-            <div class="row mt-5">
-                <div class="col-12">
-                    <div class="card">
-                        <div class="card-body p-4 text-center">
-                            <div style="height: 200px; background: linear-gradient(45deg, #ff6b6b, #feca57, #48dbfb, #ff9ff3, #54a0ff); border-radius: 1rem; display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem; position: relative; overflow: hidden;">
-                                <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: url('data:image/svg+xml,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><circle cx=\"20\" cy=\"20\" r=\"2\" fill=\"white\" opacity=\"0.3\"/><circle cx=\"80\" cy=\"30\" r=\"1.5\" fill=\"white\" opacity=\"0.4\"/><circle cx=\"40\" cy=\"70\" r=\"1\" fill=\"white\" opacity=\"0.2\"/><circle cx=\"90\" cy=\"80\" r=\"2.5\" fill=\"white\" opacity=\"0.5\"/><circle cx=\"10\" cy=\"60\" r=\"1.2\" fill=\"white\" opacity=\"0.3\"/></svg>') repeat;"></div>
-                                <div style="position: relative; z-index: 2; color: white; text-align: center;">
-                                    <i class="fas fa-chart-area fa-3x mb-3"></i>
-                                    <h5>Advanced Geophysical Surveys</h5>
-                                </div>
-                            </div>
-                            <h5 class="mb-3">Comprehensive Airborne Geophysical Surveys</h5>
-                            <p class="mb-0">Gravimetric, magnetic, radiometric, and electromagnetic methods with GPS precision positioning for defense and commercial applications.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+<section id="capabilities">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>Hands-on experience</h2>
+      <p>Hardware, platforms and methods we have flown, tested and written code for.</p>
+    </div>
+    <div class="caps">
+      <div><h3>Sensors</h3><ul><li>Optically pumped scalar magnetometers</li><li>Caesium and potassium vapour</li><li>NV-diamond vector magnetometers</li><li>Fluxgate and three-axis vector</li><li>Full-tensor gradiometers</li></ul></div>
+      <div><h3>Platforms</h3><ul><li>Multirotor and single-rotor UAS</li><li>Fixed-wing UAS</li><li>Uncrewed ground vehicles</li><li>Helicopters and towed birds</li><li>Fixed-wing survey aircraft</li></ul></div>
+      <div><h3>Methods</h3><ul><li>Tolles–Lawson and ML compensation</li><li>Anderson-function MAD detection</li><li>Particle and Kalman filter MagNav</li><li>Dipole and potential-field modelling</li><li>Spectral noise analysis</li></ul></div>
+      <div><h3>Software</h3><ul><li>Python scientific stack</li><li>PyTorch for neural compensation</li><li>MATLAB</li><li>Julia and MagNav.jl</li><li>Geosoft-style grid workflows</li></ul></div>
+    </div>
+  </div>
+</section>
 
-    <!-- Contact Section -->
-    <section id="contact" class="content-section contact-section">
-        <div class="container">
-            <div class="text-center mb-5">
-                <h2 class="section-title">Contact Us</h2>
-                <p class="section-subtitle">Get in touch for your quantum sensing and geophysical consulting needs</p>
-            </div>
-            
-            <div class="row g-5">
-                <div class="col-lg-6">
-                    <div class="contact-info">
-                        <h4 class="mb-4 fw-bold">Get In Touch</h4>
-                        
-                        <div class="contact-item">
-                            <i class="fas fa-user"></i>
-                            <div class="contact-item-content">
-                                <strong>Dr. Loughlin Tuck, P.Eng</strong>
-                                <p>Principal Consultant & Founder</p>
-                            </div>
-                        </div>
-                        
-                        <div class="contact-item">
-                            <i class="fas fa-envelope"></i>
-                            <div class="contact-item-content">
-                                <strong>Email</strong>
-                                <p>loughlin.tuck@gmail.com</p>
-                            </div>
-                        </div>
-                        
-                        <div class="contact-item">
-                            <i class="fas fa-map-marker-alt"></i>
-                            <div class="contact-item-content">
-                                <strong>Location</strong>
-                                <p>Russell, Ontario<br>Canada</p>
-                            </div>
-                        </div>
-                        
-                        <div class="contact-item">
-                            <i class="fas fa-certificate"></i>
-                            <div class="contact-item-content">
-                                <strong>Registration</strong>
-                                <p>Professional Engineers of Ontario<br>Federal Corporation - Canada</p>
-                            </div>
-                        </div>
-                        
-                        <div class="mt-4">
-                            <button class="btn btn-primary" onclick="window.location.href='mailto:loughlin.tuck@gmail.com'">
-                                <i class="fas fa-paper-plane me-2"></i>Send Email
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="col-lg-6">
-                    <div class="map-placeholder mb-4">
-                        <div class="map-content">
-                            <i class="fas fa-map-marked-alt d-block"></i>
-                            <h5 class="mb-2">Eastern Ontario</h5>
-                            <p class="mb-0">Serving the Ottawa-Russell Region</p>
-                        </div>
-                    </div>
-                    
-                    <div class="card">
-                        <div class="card-body text-center p-4">
-                            <h5 class="mb-3">Service Areas</h5>
-                            <p class="mb-4">Providing specialized quantum sensing and geophysical consulting services across North America</p>
-                            <div class="row text-center g-4">
-                                <div class="col-4">
-                                    <i class="fas fa-maple-leaf fa-3x text-danger mb-2"></i>
-                                    <h6 class="fw-bold">Canada</h6>
-                                    <small class="text-muted">Primary Market</small>
-                                </div>
-                                <div class="col-4">
-                                    <i class="fas fa-flag-usa fa-3x text-primary mb-2"></i>
-                                    <h6 class="fw-bold">United States</h6>
-                                    <small class="text-muted">Defense & Commercial</small>
-                                </div>
-                                <div class="col-4">
-                                    <i class="fas fa-globe-americas fa-3x text-success mb-2"></i>
-                                    <h6 class="fw-bold">International</h6>
-                                    <small class="text-muted">Select Projects</small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+<section id="publications">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>Publications</h2>
+      <p>Peer-reviewed work by Dr. Loughlin Tuck on airborne magnetometry, uncrewed platforms, compensation and geomagnetism.</p>
+    </div>
+    <div class="pub-group">Journal articles</div>
+    <ol class="pubs">
+      <li><span>M. Cunningham, L. Tuck, C. Samson, J. Laliberté, M. Goldie, A. Wood, and D. Birkett, “Aeromagnetic attitude compensation for uninhabited aircraft systems without high-altitude calibration patterns using recurrent neural networks,” <i>The Leading Edge</i>, vol. 42, no. 2, 2023, doi: <a href="https://doi.org/10.1190/tle42020112.1">10.1190/tle42020112.1</a>.</span></li>
+      <li><span>R. J. Pirjola, D. H. Boteler, L. Tuck, and S. Marsal, “The Lehtinen–Pirjola method modified for efficient modelling of geomagnetically induced currents in multiple voltage levels of a power network,” <i>Ann. Geophys.</i>, vol. 40, no. 2, pp. 205–215, 2022, doi: <a href="https://doi.org/10.5194/angeo-40-205-2022">10.5194/angeo-40-205-2022</a>.</span></li>
+      <li><span>L. E. Tuck, C. Samson, J. Laliberté, and M. Cunningham, “Magnetic interference mapping of four types of unmanned aircraft systems intended for aeromagnetic surveying,” <i>Geosci. Instrum. Methods Data Syst.</i>, vol. 10, no. 1, pp. 101–112, 2021, doi: <a href="https://doi.org/10.5194/gi-10-101-2021">10.5194/gi-10-101-2021</a>.</span></li>
+      <li><span>L. Tuck, C. Samson, C. Polowick, and J. Laliberté, “Real-time compensation of magnetic data acquired by a single-rotor unmanned aircraft system,” <i>Geophys. Prospect.</i>, vol. 67, no. 6, pp. 1637–1651, 2019, doi: <a href="https://doi.org/10.1111/1365-2478.12800">10.1111/1365-2478.12800</a>.</span></li>
+      <li><span>A. Hay, C. Samson, L. Tuck, and A. Ellery, “Magnetic surveying with an unmanned ground vehicle,” <i>J. Unmanned Veh. Syst.</i>, vol. 6, no. 4, pp. 249–266, 2018, doi: <a href="https://doi.org/10.1139/juvs-2018-0013">10.1139/juvs-2018-0013</a>.</span></li>
+      <li><span>L. Tuck, C. Samson, J. Laliberté, M. Wells, and F. Bélanger, “Magnetic interference testing method for an electric fixed-wing unmanned aircraft system (UAS),” <i>J. Unmanned Veh. Syst.</i>, vol. 6, no. 3, pp. 177–194, 2018, doi: <a href="https://doi.org/10.1139/juvs-2018-0006">10.1139/juvs-2018-0006</a>.</span></li>
+      <li><span>L. Tuck <i>et al.</i>, “Dissolution and recrystallization processes in multiphase silicon stabilized tricalcium phosphate,” <i>J. Mater. Sci.: Mater. Med.</i>, vol. 19, no. 2, pp. 917–927, 2008, doi: <a href="https://doi.org/10.1007/s10856-007-0172-8">10.1007/s10856-007-0172-8</a>.</span></li>
+      <li><span>F. Xu, L. Tuck <i>et al.</i>, “Investigation of residual stress in a bent Ti-clad Cu bus-bar by neutron diffraction and finite element modeling,” <i>J. Neutron Res.</i>, vol. 15, no. 3–4, pp. 259–266, 2007.</span></li>
+      <li><span>L. Tuck, M. Sayer <i>et al.</i>, “Composition and crystal structure of resorbable calcium phosphate thin films,” <i>J. Mater. Sci.</i>, vol. 41, no. 13, pp. 4273–4284, 2006.</span></li>
+      <li><span>J. W. Reid, L. Tuck <i>et al.</i>, “Synthesis and characterization of single-phase silicon-substituted α-tricalcium phosphate,” <i>Biomaterials</i>, vol. 27, no. 15, pp. 2916–2925, 2006.</span></li>
+    </ol>
+    <div class="pub-group">Thesis</div>
+    <ol class="pubs" style="counter-reset:p 10">
+      <li><span>L. Tuck, “Characterization and compensation of magnetic interference resulting from unmanned aircraft systems,” Ph.D. dissertation, Dept. Earth Sci., Carleton Univ., Ottawa, ON, Canada, 2019. <a href="https://curve.carleton.ca/d2b99a48-2c1d-4c7c-b9ec-a411ad390020">Read the thesis</a>.</span></li>
+    </ol>
+    <div class="pub-group">Selected conference presentations</div>
+    <ol class="pubs" style="counter-reset:p 11">
+      <li><span>L. Tuck, “Low-altitude calibration using neural networks,” presented at the Marine Electromagnetics Conf. (MARELEC), U.K., Apr. 2025.</span></li>
+      <li><span>L. Tuck, “Airborne and UAV platform installation design optimization considerations of full-tensor quantum magnetometers,” poster, Marine Electromagnetics Conf. (MARELEC), U.K., Apr. 2025.</span></li>
+    </ol>
+  </div>
+</section>
 
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-6">
-                    <div class="d-flex align-items-center gap-3 mb-3 mb-lg-0">
-                        <i class="fas fa-atom fa-2x text-primary"></i>
-                        <div>
-                            <h5>QuASI Inc.</h5>
-                            <p class="mb-0 small">Quantum & Autonomous Sensing Innovations</p>
-                            <small class="text-muted">Federal Corporation - Canada</small>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6 text-lg-end">
-                    <p class="mb-1">&copy; 2025 QuASI Inc. All rights reserved.</p>
-                    <small class="text-muted">Professional Engineering Services</small>
-                </div>
-            </div>
-        </div>
-    </footer>
+<section id="about">
+  <div class="wrap about">
+    <div>
+      <img src="assets/loughlin-tuck.png" alt="Portrait of Dr. Loughlin Tuck" width="310" height="400">
+    </div>
+    <div>
+      <h2>Dr. Loughlin Tuck, P.Eng.</h2>
+      <p class="small" style="margin:8px 0 24px">Founder and principal consultant</p>
+      <div class="prose">
+        <p>Loughlin is a professional engineer and geophysicist who has spent more than a decade designing, flying and processing magnetic sensing systems. His doctoral research showed how to characterise and compensate the magnetic interference of uncrewed aircraft, and he has since led research programmes in magnetic anomaly detection, alternative navigation and quantum sensing.</p>
+        <p>He founded QuASI to give defence, survey and sensor companies direct access to that experience: someone who has worked at the sensor, the aircraft and the algorithm, and who can say plainly what will and won't work.</p>
+      </div>
+      <div class="creds">
+        <div><b>Professional Engineer</b>, Ontario</div>
+        <div><b>PhD</b>, Earth Sciences (geophysics)</div>
+        <div><b>MASc</b>, Materials physics engineering · <b>MSc</b>, Exploration geology</div>
+        <div><b>BASc</b>, Engineering physics</div>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-    <script>
-        function showSection(sectionName) {
-            // Hide all sections
-            const sections = document.querySelectorAll('.content-section');
-            sections.forEach(section => {
-                section.classList.remove('active');
-            });
-            
-            // Show selected section with animation
-            const targetSection = document.getElementById(sectionName);
-            if (targetSection) {
-                targetSection.classList.add('active');
-                targetSection.classList.add('fade-in-up');
-                
-                // Remove animation class after animation completes
-                setTimeout(() => {
-                    targetSection.classList.remove('fade-in-up');
-                }, 600);
-            }
-            
-            // Update navigation
-            const navLinks = document.querySelectorAll('.nav-link');
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-            });
-            
-            // Find and activate the corresponding nav link
-            navLinks.forEach(link => {
-                const linkText = link.textContent.toLowerCase();
-                if ((sectionName === 'intro' && linkText.includes('about')) ||
-                    (sectionName === 'services' && linkText.includes('services')) ||
-                    (sectionName === 'contact' && linkText.includes('contact'))) {
-                    link.classList.add('active');
-                }
-            });
-            
-            // Smooth scroll to top
-            window.scrollTo({top: 0, behavior: 'smooth'});
-        }
+<section id="contact" class="contact">
+  <div class="wrap grid">
+    <div>
+      <img class="contact-logo" src="assets/logo/quasi-logo-B2-reverse.svg" alt="QuASI" width="220" height="64">
+      <h2>Have a magnetic sensing problem?</h2>
+      <p>Tell us about the platform, the sensor and what you need to know. You'll get a straight answer on whether we can help, usually within two business days.</p>
+      <a class="btn primary" href="mailto:loughlin.tuck@gmail.com?subject=Project%20enquiry">Email Loughlin</a>
+    </div>
+    <dl>
+      <dt>Email</dt><dd><a href="mailto:loughlin.tuck@gmail.com">loughlin.tuck@gmail.com</a></dd>
+      <dt>LinkedIn</dt><dd><a href="https://www.linkedin.com/in/loughlintuck/">linkedin.com/in/loughlintuck</a></dd>
+      <dt>Based in</dt><dd>Russell, Ontario, Canada</dd>
+      <dt>Working with</dt><dd>Clients across Canada and the United States</dd>
+      <dt>Company</dt><dd>Quantum &amp; Autonomous Sensing Innovations Inc., a federally incorporated Canadian company</dd>
+    </dl>
+  </div>
+</section>
+</main>
 
-        // Handle navbar collapse on mobile
-        document.querySelectorAll('.nav-link').forEach(link => {
-            link.addEventListener('click', () => {
-                const navbarCollapse = document.querySelector('.navbar-collapse');
-                if (navbarCollapse.classList.contains('show')) {
-                    const bsCollapse = bootstrap.Collapse.getInstance(navbarCollapse);
-                    if (bsCollapse) {
-                        bsCollapse.hide();
-                    }
-                }
-            });
-        });
+<footer>
+  <div class="wrap">
+    <span>© 2026 Quantum &amp; Autonomous Sensing Innovations Inc.</span>
+    <span>Hero map and flight data: DAF-MIT AIA open flight data, public domain.</span>
+  </div>
+</footer>
 
-        // Add scroll effect to navbar
-        window.addEventListener('scroll', function() {
-            const navbar = document.querySelector('.navbar');
-            if (window.scrollY > 50) {
-                navbar.style.background = 'rgba(255, 255, 255, 0.98)';
-                navbar.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
-            } else {
-                navbar.style.background = 'rgba(255, 255, 255, 0.95)';
-                navbar.style.boxShadow = '0 1px 3px rgba(0, 0, 0, 0.1)';
-            }
-        });
-
-        // Initialize page
-        document.addEventListener('DOMContentLoaded', function() {
-            showSection('intro');
-        });
-    </script>
+<script src="js/hero-data.js"></script>
+<script src="js/site.js"></script>
 </body>
 </html>

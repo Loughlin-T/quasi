@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MAD simulator | QuASI Inc.</title>
+<meta name="description" content="Browser-based magnetic anomaly detection simulator: dipole signatures, noise and an Anderson-function detector.">
+<link rel="icon" href="../assets/logo/quasi-icon-B6.svg" type="image/svg+xml">
+<link rel="icon" href="../assets/logo/quasi-icon-B6.png" type="image/png">
+<link rel="apple-touch-icon" href="../assets/logo/quasi-icon-B6.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/site.css">
+</head>
+<body>
+<nav class="nav" id="nav">
+  <div class="wrap">
+    <a class="brand" href="../index.html" aria-label="QuASI home">
+      <img src="../assets/logo/quasi-logo-B2.svg" alt="QuASI" width="160" height="46"><span>Quantum &amp; Autonomous Sensing Innovations</span>
+    </a>
+    <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="navLinks">Menu</button>
+    <ul id="navLinks">
+      <li><a href="../index.html#services">Services</a></li>
+      <li><a href="../index.html#tools">Tools</a></li>
+      <li><a href="../index.html#notebooks">Notebooks</a></li>
+      <li><a href="../index.html#publications">Publications</a></li>
+      <li><a href="../index.html#about">About</a></li>
+    </ul>
+    <a class="btn primary" href="../index.html#contact">Discuss a project</a>
+  </div>
+</nav>
+
+<main class="wrap">
+  <header class="page-head">
+    <div class="crumb"><a href="../index.html#tools">Tools</a></div>
+    <h1>MAD simulator</h1>
+    <p class="lede">Fly a total-field magnetometer past a magnetic dipole. Set the magnetic latitude, target, geometry and noise, then see the anomaly, the plan-view field and what an Anderson-function detector makes of it.</p>
+  </header>
+
+  <div class="tool-layout">
+    <form class="controls" id="f" onsubmit="return false">
+      <fieldset>
+        <legend>Earth's field</legend>
+        <div class="field full"><select id="loc" aria-label="Location preset">
+          <option value="70,-13,53000" selected>Mid-latitude north (I 70°, D −13°)</option>
+          <option value="45,5,48000">Temperate (I 45°, D 5°)</option>
+          <option value="5,0,33000">Near the magnetic equator (I 5°)</option>
+          <option value="-60,20,55000">Southern high latitude (I −60°)</option>
+          <option value="custom">Custom</option>
+        </select></div>
+        <label class="field">Inclination<span><input id="inc" type="number" step="1" min="-90" max="90" value="70"><span class="u">deg</span></span></label>
+        <label class="field">Declination<span><input id="dec" type="number" step="1" min="-180" max="180" value="-13"><span class="u">deg</span></span></label>
+      </fieldset>
+      <fieldset>
+        <legend>Target</legend>
+        <label class="field">Dipole moment<span><input id="m" type="number" step="any" min="0" value="250"><span class="u">A·m²</span></span></label>
+        <label class="field">Magnetisation<span><select id="mag"><option value="induced" selected>Induced</option><option value="custom">Custom</option></select></span></label>
+        <label class="field">Moment inclination<span><input id="minc" type="number" step="1" min="-90" max="90" value="70" disabled><span class="u">deg</span></span></label>
+        <label class="field">Moment declination<span><input id="mdec" type="number" step="1" min="-180" max="180" value="-13" disabled><span class="u">deg</span></span></label>
+        <p class="hint">Induced: the moment points along the Earth's field. Choose custom to add permanent magnetisation.</p>
+      </fieldset>
+      <fieldset>
+        <legend>Pass geometry</legend>
+        <label class="field">Height above target<span><input id="h" type="number" step="any" min="1" value="40"><span class="u">m</span></span></label>
+        <label class="field">Horizontal offset at CPA<span><input id="cpa" type="number" step="any" value="20"><span class="u">m</span></span></label>
+        <label class="field">Track heading<span><input id="hdg" type="number" step="5" value="90"><span class="u">deg</span></span></label>
+        <label class="field">Speed<span><input id="v" type="number" step="any" min="0.5" value="15"><span class="u">m/s</span></span></label>
+        <label class="field">Sample rate<span><input id="fs" type="number" step="any" min="1" max="200" value="10"><span class="u">Hz</span></span></label>
+      </fieldset>
+      <fieldset>
+        <legend>Noise</legend>
+        <label class="field">Sensor white noise<span><input id="s0" type="number" step="any" min="0" value="1"><span class="u">pT/√Hz</span></span></label>
+        <label class="field">1/f corner<span><input id="fc" type="number" step="any" min="0" value="0.1"><span class="u">Hz</span></span></label>
+        <label class="field">Platform residual<span><input id="plat" type="number" step="any" min="0" value="0.05"><span class="u">nT rms</span></span></label>
+        <p class="hint">Platform residual is modelled as slowly varying noise below 0.2 Hz, as left after compensation.</p>
+      </fieldset>
+      <fieldset>
+        <legend>Detector</legend>
+        <label class="field">False-alarm probability<span><select id="pfa"><option value="1e-2">10⁻²</option><option value="1e-3" selected>10⁻³</option><option value="1e-4">10⁻⁴</option><option value="1e-6">10⁻⁶</option></select></span></label>
+        <div class="row-btns"><button class="btn primary" id="rerun" type="button">New noise sample</button></div>
+      </fieldset>
+    </form>
+
+    <div class="outputs">
+      <div class="kpis">
+        <div><b id="kPeak">–</b><span>Peak-to-peak anomaly</span></div>
+        <div><b id="kSnr">–</b><span>Peak anomaly ÷ noise rms</span></div>
+        <div id="kDetBox"><b id="kDet">–</b><span id="kDetSub">Detector decision</span></div>
+      </div>
+      <div class="chart">
+        <h3>What the magnetometer records</h3>
+        <p id="sigCap">Total-field anomaly along the track, centred on the closest point of approach.</p>
+        <canvas id="cSig"></canvas>
+      </div>
+      <div class="chart">
+        <h3>Anderson-function detector</h3>
+        <p>Energy in the three Anderson basis functions, normalised by the noise. A detection is declared where it crosses the threshold.</p>
+        <canvas id="cDet"></canvas>
+      </div>
+      <div class="chart">
+        <h3>Plan view at sensor height</h3>
+        <p>Total-field anomaly in the horizontal plane the sensor flies through. Blue is negative, teal positive; north is up.</p>
+        <canvas id="cMap" style="height:420px"></canvas>
+      </div>
+      <div class="notes">
+        <h2>How it works</h2>
+        <p>The target is a point dipole. Its field is <b>B</b> = (μ<sub>0</sub>/4π)[3(<b>m</b>·<b>r̂</b>)<b>r̂</b> − <b>m</b>]/<i>r</i>³, and a total-field sensor records its projection onto the Earth's field direction, Δ<i>T</i> ≈ <b>B</b>·<b>F̂</b>. That projection is why the same target gives a different-looking signature at every latitude and heading.</p>
+        <p>For a straight pass, every possible signature is a combination of three Anderson functions <i>u</i><sup><i>k</i></sup>/(1 + <i>u</i>²)<sup>5/2</sup>, <i>k</i> = 0, 1, 2, with <i>u</i> the along-track distance divided by the range at closest approach. The detector slides a window along the record, projects the data onto those three functions (after removing a local linear trend), and sums the squared coefficients. For white noise that statistic is χ² with three degrees of freedom, which sets the threshold for the chosen false-alarm probability. The window is matched to the true CPA range here; a real system runs a bank of windows.</p>
+        <p>Noise is synthesised as white sensor noise, a 1/f component built from a bank of first-order filters, and slowly varying platform residual. Because coloured noise is not white, the realised false-alarm rate will differ from the nominal one. Re-run the noise a few times to get a feel for it.</p>
+      </div>
+    </div>
+  </div>
+</main>
+<footer>
+  <div class="wrap">
+    <span>© 2026 Quantum &amp; Autonomous Sensing Innovations Inc.</span>
+    <span>Tools provided as-is for engineering estimates. Check results against your own analysis.</span>
+  </div>
+</footer>
+<script src="../js/site.js"></script>
+<script src="../js/plot.js"></script>
+<script src="../js/madsim.js"></script>
+</body>
+</html>

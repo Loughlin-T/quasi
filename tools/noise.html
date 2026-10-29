@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Noise budget and detection range | QuASI Inc.</title>
+<meta name="description" content="Free calculator for magnetometer noise budgets and dipole detection range.">
+<link rel="icon" href="../assets/logo/quasi-icon-B6.svg" type="image/svg+xml">
+<link rel="icon" href="../assets/logo/quasi-icon-B6.png" type="image/png">
+<link rel="apple-touch-icon" href="../assets/logo/quasi-icon-B6.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/site.css">
+</head>
+<body>
+<nav class="nav" id="nav">
+  <div class="wrap">
+    <a class="brand" href="../index.html" aria-label="QuASI home">
+      <img src="../assets/logo/quasi-logo-B2.svg" alt="QuASI" width="160" height="46"><span>Quantum &amp; Autonomous Sensing Innovations</span>
+    </a>
+    <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="navLinks">Menu</button>
+    <ul id="navLinks">
+      <li><a href="../index.html#services">Services</a></li>
+      <li><a href="../index.html#tools">Tools</a></li>
+      <li><a href="../index.html#notebooks">Notebooks</a></li>
+      <li><a href="../index.html#publications">Publications</a></li>
+      <li><a href="../index.html#about">About</a></li>
+    </ul>
+    <a class="btn primary" href="../index.html#contact">Discuss a project</a>
+  </div>
+</nav>
+
+<main class="wrap">
+  <header class="page-head">
+    <div class="crumb"><a href="../index.html#tools">Tools</a></div>
+    <h1>Magnetic noise budget and detection range</h1>
+    <p class="lede">Combine sensor noise, measurement bandwidth, platform interference and environmental noise into one budget, then find how far away a magnetic dipole can be detected.</p>
+  </header>
+
+  <div class="tool-layout">
+    <form class="controls" id="f" onsubmit="return false">
+      <fieldset>
+        <legend>Sensor</legend>
+        <div class="field full"><select id="sensor" aria-label="Sensor preset">
+          <option value="0.3,0.05">Caesium or potassium vapour (survey grade)</option>
+          <option value="1,0.1" selected>Optically pumped, compact (OPM)</option>
+          <option value="10,1">Fluxgate, low noise</option>
+          <option value="50,0.5">Overhauser or proton precession</option>
+          <option value="custom">Custom</option>
+        </select></div>
+        <label class="field">White noise density<span><input id="s0" type="number" step="any" min="0.001" value="1"><span class="u">pT/√Hz</span></span></label>
+        <label class="field">1/f corner frequency<span><input id="fc" type="number" step="any" min="0" value="0.1"><span class="u">Hz</span></span></label>
+        <p class="hint">Presets are typical orders of magnitude. Use your sensor's datasheet or a measured spectrum.</p>
+      </fieldset>
+      <fieldset>
+        <legend>Measurement band</legend>
+        <div class="field full"><select id="band" aria-label="Band preset">
+          <option value="0.04,1" selected>Anomaly detection (0.04–1 Hz)</option>
+          <option value="0.005,2">Mapping survey (0.005–2 Hz)</option>
+          <option value="0.001,0.5">Magnetic navigation (0.001–0.5 Hz)</option>
+          <option value="custom">Custom</option>
+        </select></div>
+        <label class="field">Low cut-off<span><input id="f1" type="number" step="any" min="0.0001" value="0.04"><span class="u">Hz</span></span></label>
+        <label class="field">High cut-off<span><input id="f2" type="number" step="any" min="0.001" value="1"><span class="u">Hz</span></span></label>
+      </fieldset>
+      <fieldset>
+        <legend>Platform</legend>
+        <label class="field">Residual after compensation<span><input id="plat" type="number" step="any" min="0" value="0.05"><span class="u">nT rms</span></span></label>
+        <label class="field">Uncompensated source moment<span><input id="srcm" type="number" step="any" min="0" value="0"><span class="u">A·m²</span></span></label>
+        <label class="field">Distance to that source<span><input id="srcr" type="number" step="any" min="0.01" value="1"><span class="u">m</span></span></label>
+        <p class="hint">Use the source fields for something compensation will not remove, such as a motor or battery that changes state. Its field is taken at the random-orientation average.</p>
+      </fieldset>
+      <fieldset>
+        <legend>Environment</legend>
+        <label class="field">Geological and geomagnetic noise<span><input id="env" type="number" step="any" min="0" value="0.03"><span class="u">nT rms</span></span></label>
+        <p class="hint">In-band background: geomagnetic micropulsations, ocean swell, near-surface geology.</p>
+      </fieldset>
+      <fieldset>
+        <legend>Target</legend>
+        <div class="field full"><select id="tgt" aria-label="Target preset">
+          <option value="5">Small ferrous object, ~20 kg (5 A·m²)</option>
+          <option value="250" selected>Ferrous object, ~1 t (250 A·m²)</option>
+          <option value="2500">Vehicle or large object, ~10 t (2,500 A·m²)</option>
+          <option value="custom">Custom</option>
+        </select></div>
+        <label class="field">Dipole moment<span><input id="m" type="number" step="any" min="0.001" value="250"><span class="u">A·m²</span></span></label>
+        <label class="field">Required SNR<span><input id="snr" type="number" step="any" min="0.5" value="5"><span class="u">peak / rms</span></span></label>
+        <label class="field">Geometry factor<span><select id="k"><option value="1">Equatorial (1)</option><option value="1.414" selected>Random orientation (√2)</option><option value="2">Along axis (2)</option></select></span></label>
+      </fieldset>
+    </form>
+
+    <div class="outputs">
+      <div class="kpis">
+        <div><b id="kTot">–</b><span>Total noise in band</span></div>
+        <div class="ok"><b id="kRange">–</b><span>Detection range at required SNR</span></div>
+        <div><b id="kDom">–</b><span>Dominant noise source</span></div>
+      </div>
+      <div class="chart">
+        <h3>Noise budget</h3>
+        <p>Contributions add in quadrature. The longest bar is the one worth spending money on.</p>
+        <table class="budget" id="budget"></table>
+      </div>
+      <div class="chart">
+        <h3>Sensor noise spectrum</h3>
+        <p>Amplitude spectral density with the measurement band shaded.</p>
+        <canvas id="cSpec"></canvas>
+      </div>
+      <div class="chart">
+        <h3>Peak anomaly versus range</h3>
+        <p>Dipole field falls as 1/r³, so halving the noise extends range by only 26 %.</p>
+        <canvas id="cRange"></canvas>
+      </div>
+      <div class="notes">
+        <h2>How it works</h2>
+        <p>Sensor noise is modelled as white noise of density <i>S</i><sub>0</sub> with a 1/f rise below the corner frequency <i>f</i><sub>c</sub>, so its power spectral density is <i>S</i><sub>0</sub>²(1 + <i>f</i><sub>c</sub>/<i>f</i>). Integrating over the band [<i>f</i><sub>1</sub>, <i>f</i><sub>2</sub>] gives σ² = <i>S</i><sub>0</sub>²[(<i>f</i><sub>2</sub> − <i>f</i><sub>1</sub>) + <i>f</i><sub>c</sub> ln(<i>f</i><sub>2</sub>/<i>f</i><sub>1</sub>)].</p>
+        <p>A dipole of moment <i>m</i> at range <i>r</i> produces a peak total-field anomaly of about <i>k</i>·(μ<sub>0</sub>/4π)·<i>m</i>/<i>r</i>³, where <i>k</i> runs from 1 (broadside) to 2 (along the dipole axis). Detection range is where that peak equals the required SNR times the total noise.</p>
+        <p>This is a first-order budget. It ignores the band-limiting of the anomaly itself (set the band to suit your speed and range: the anomaly's dominant frequency is roughly <i>v</i>/(2<i>r</i>)), heading error, and the processing gain of a matched-filter detector. For those, use the <a href="mad-sim.html">MAD simulator</a>.</p>
+      </div>
+    </div>
+  </div>
+</main>
+<footer>
+  <div class="wrap">
+    <span>© 2026 Quantum &amp; Autonomous Sensing Innovations Inc.</span>
+    <span>Tools provided as-is for engineering estimates. Check results against your own analysis.</span>
+  </div>
+</footer>
+<script src="../js/site.js"></script>
+<script src="../js/plot.js"></script>
+<script src="../js/noise.js"></script>
+</body>
+</html>
