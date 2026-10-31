@@ -137,7 +137,9 @@ section + section { border-top: 1px solid var(--rule); }
 
 /* about */
 .about { display: grid; grid-template-columns: 260px 1fr; gap: 56px; align-items: start; }
-.about img { border-radius: 10px; width: 260px; aspect-ratio: 310/400; object-fit: cover; }
+.portrait { width: 260px; aspect-ratio: 4/5; border-radius: 10px; overflow: hidden; background: var(--panel); }
+.portrait img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; transform-origin: 50% 35%; transform: scale(1.14) translateY(3%); opacity: 0; transition: opacity .9s ease; will-change: transform; }
+.portrait.in img { opacity: 1; }
 .creds { margin-top: 18px; font-size: 15px; color: var(--slate); }
 .creds div { padding: 7px 0; border-bottom: 1px solid var(--rule); }
 .creds b { color: var(--ink); font-weight: 600; }
@@ -183,7 +185,7 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: s
 @media (max-width: 560px) {
   body { font-size: 16px; }
   .caps, .steps { grid-template-columns: 1fr; }
-  .about img { width: 200px; }
+  .portrait { width: 200px; }
   .trace svg { height: 130px; }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -238,3 +240,20 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: s
 
 .contact-logo { height: 64px; width: auto; margin: 0 0 24px -6px; }
 @media (max-width: 560px) { .brand img { height: 38px; } }
+
+/* founder strip, links */
+.founder { display: inline-flex; align-items: center; gap: 14px; margin-top: 34px; text-decoration: none; color: var(--ink); padding: 8px 18px 8px 8px; border: 1px solid var(--rule); border-radius: 999px; background: #fff; transition: border-color .15s; }
+.founder:hover { border-color: #b9c8d8; color: var(--ink); }
+.founder img { width: 52px; height: 52px; border-radius: 50%; object-fit: cover; object-position: 50% 22%; }
+.founder b { display: block; font-size: 15px; font-weight: 600; }
+.founder small { display: block; font-size: 13px; color: var(--mute); }
+.about-links, .contact-ctas { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 26px; }
+.btn.ghost-light { background: transparent; color: #fff; border-color: rgba(255,255,255,.55); }
+.btn.ghost-light:hover { background: rgba(255,255,255,.1); color: #fff; }
+.contact .contact-ctas .btn.primary { margin-top: 0; }
+.foot-links { display: inline-flex; flex-wrap: wrap; gap: 6px 18px; }
+.foot-links a { color: var(--slate); text-decoration: none; font-weight: 500; }
+.foot-links a:hover { color: var(--blue); }
+
+@media (prefers-reduced-motion: reduce) { .portrait img { transform: none !important; opacity: 1 !important; } }
+.trace svg { touch-action: pan-y; cursor: crosshair; }

@@ -46,6 +46,10 @@
           <a class="btn primary" href="#contact">Discuss a project</a>
           <a class="btn ghost" href="tools/noise.html">Open the noise calculator</a>
         </div>
+        <a class="founder" href="#about">
+          <img src="assets/loughlin-tuck.jpg" alt="" width="52" height="52">
+          <span><b>Dr. Loughlin Tuck, P.Eng.</b><small>Founder and principal consultant</small></span>
+        </a>
       </div>
       <figure class="map-panel" style="margin:0">
         <img src="assets/renfrew-map.jpg" alt="Shaded aeromagnetic anomaly map near Renfrew, Ontario, with a survey flight line drawn across it" width="1400" height="1158">
@@ -55,8 +59,8 @@
     <figure class="trace" style="margin:40px 0 0">
       <svg id="traceSvg" viewBox="0 0 1000 170" preserveAspectRatio="none" role="img" aria-label="Measured magnetic field along a 115 km flight line compared with the anomaly map"></svg>
       <figcaption>
-        <span><span class="key"><i style="background:#9fb3c8"></i>Map prediction</span><span class="key"><i style="background:#1d5fa8"></i>Measured, compensated</span></span>
-        <span id="traceReadout">Flight line 1002.16 over Renfrew, Ontario: 115 km, public DAF-MIT data. Hover to follow the aircraft.</span>
+        <span><span class="key"><i style="background:#9fb3c8"></i>Map prediction</span><span class="key"><i style="background:#1d5fa8"></i>Measured, compensated</span><span class="key key-hover"><i style="background:#1e9e8f;height:8px;width:8px;border-radius:50%"></i>MagNav position (95% circle ×40)</span><span class="key key-hover"><i style="background:#e07a1f;height:8px;width:8px;border-radius:50%"></i>INS alone</span></span>
+        <span id="traceReadout">Flight line 1002.16 over Renfrew, Ontario: 115 km, public DAF-MIT data. Hover over the trace to fly the line and watch the magnetic navigation estimate.</span>
       </figcaption>
     </figure>
   </div>
@@ -217,8 +221,8 @@
 
 <section id="about">
   <div class="wrap about">
-    <div>
-      <img src="assets/loughlin-tuck.png" alt="Portrait of Dr. Loughlin Tuck" width="310" height="400">
+    <div class="portrait" id="portrait">
+      <img src="assets/loughlin-tuck.jpg" alt="Portrait of Dr. Loughlin Tuck" width="640" height="800">
     </div>
     <div>
       <h2>Dr. Loughlin Tuck, P.Eng.</h2>
@@ -233,6 +237,10 @@
         <div><b>MASc</b>, Materials physics engineering · <b>MSc</b>, Exploration geology</div>
         <div><b>BASc</b>, Engineering physics</div>
       </div>
+      <div class="about-links">
+        <a class="btn primary" href="https://www.linkedin.com/in/loughlintuck/" target="_blank" rel="noopener">Connect on LinkedIn</a>
+        <a class="btn ghost" href="#publications">Read the publications</a>
+      </div>
     </div>
   </div>
 </section>
@@ -242,12 +250,15 @@
     <div>
       <img class="contact-logo" src="assets/logo/quasi-logo-B2-reverse.svg" alt="QuASI" width="220" height="64">
       <h2>Have a magnetic sensing problem?</h2>
-      <p>Tell us about the platform, the sensor and what you need to know. You'll get a straight answer on whether we can help, usually within two business days.</p>
-      <a class="btn primary" href="mailto:loughlin.tuck@gmail.com?subject=Project%20enquiry">Email Loughlin</a>
+      <p>Send me a message on LinkedIn with the platform, the sensor and what you need to know. You'll get a straight answer on whether I can help, usually within two business days.</p>
+      <div class="contact-ctas">
+        <a class="btn primary" href="https://www.linkedin.com/in/loughlintuck/" target="_blank" rel="noopener">Message me on LinkedIn</a>
+        <a class="btn ghost-light" href="https://github.com/Loughlin-T/quasi" target="_blank" rel="noopener">See the code on GitHub</a>
+      </div>
     </div>
     <dl>
-      <dt>Email</dt><dd><a href="mailto:loughlin.tuck@gmail.com">loughlin.tuck@gmail.com</a></dd>
-      <dt>LinkedIn</dt><dd><a href="https://www.linkedin.com/in/loughlintuck/">linkedin.com/in/loughlintuck</a></dd>
+      <dt>LinkedIn</dt><dd><a href="https://www.linkedin.com/in/loughlintuck/" target="_blank" rel="noopener">linkedin.com/in/loughlintuck</a></dd>
+      <dt>GitHub</dt><dd><a href="https://github.com/Loughlin-T/quasi" target="_blank" rel="noopener">github.com/Loughlin-T</a></dd>
       <dt>Based in</dt><dd>Russell, Ontario, Canada</dd>
       <dt>Working with</dt><dd>Clients across Canada and the United States</dd>
       <dt>Company</dt><dd>Quantum &amp; Autonomous Sensing Innovations Inc., a federally incorporated Canadian company</dd>
@@ -259,7 +270,7 @@
 <footer>
   <div class="wrap">
     <span>© 2026 Quantum &amp; Autonomous Sensing Innovations Inc.</span>
-    <span>Hero map and flight data: DAF-MIT AIA open flight data, public domain.</span>
+    <span class="foot-links"><a href="https://www.linkedin.com/in/loughlintuck/" target="_blank" rel="noopener">LinkedIn</a><a href="https://github.com/Loughlin-T/quasi" target="_blank" rel="noopener">GitHub</a><span>Map data: DAF-MIT AIA open flight data, public domain</span></span>
   </div>
 </footer>
 
