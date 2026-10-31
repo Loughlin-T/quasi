@@ -71,7 +71,7 @@
   const insDot = el('circle', { r: 11, fill: '#e07a1f', stroke: '#fff', 'stroke-width': 2, 'vector-effect': 'non-scaling-stroke' }, navG);
   const ring = el('circle', { fill: 'rgba(30,158,143,.18)', stroke: '#1e9e8f', 'stroke-width': 2, 'vector-effect': 'non-scaling-stroke' }, navG);
   const estDot = el('circle', { r: 9, fill: '#1e9e8f', stroke: '#fff', 'stroke-width': 2, 'vector-effect': 'non-scaling-stroke' }, navG);
-  const EX = 40;
+  const EX = 100;
   const fmtD = m => m >= 1000 ? (m / 1000).toFixed(1) + ' km' : Math.round(m) + ' m';
   function showNav(i) {
     if (!hasEst) return;
@@ -79,7 +79,7 @@
     insLine.setAttribute('x1', tx_); insLine.setAttribute('y1', ty_);
     insLine.setAttribute('x2', H.insPx[i] * W); insLine.setAttribute('y2', H.insPy[i] * MH);
     insDot.setAttribute('cx', H.insPx[i] * W); insDot.setAttribute('cy', H.insPy[i] * MH);
-    const r = Math.max(22, H.sd2[i] * EX * W / H.mW);
+    const r = Math.min(160, Math.max(6, H.sd2[i] * EX * W / H.mW));
     ring.setAttribute('cx', H.estPx[i] * W); ring.setAttribute('cy', H.estPy[i] * MH); ring.setAttribute('r', r);
     estDot.setAttribute('cx', H.estPx[i] * W); estDot.setAttribute('cy', H.estPy[i] * MH);
     navG.setAttribute('opacity', 1);
